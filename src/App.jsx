@@ -10,6 +10,9 @@ import {
 } from "@xyflow/react";
 import ResourceNode from "./Nodes/ResourceNode";
 import BuildingNode from "./Nodes/BuildingNode";
+import Header from "./Components/Header";
+import AddBuildingForm from "./Components/AddBuildingForm";
+import sfData from "./data/sf-data.json";
 
 import "@xyflow/react/dist/style.css";
 
@@ -18,30 +21,9 @@ const nodeTypes = {
   buildingNode: BuildingNode,
 };
 
-const initialNodes = [
-  {
-    id: "1",
-    type: "resourceNode",
-    data: { resource: { name: "Iron Ore", amount: 100 } },
-    position: { x: 100, y: 100 },
-  },
-  {
-    id: "2",
-    type: "buildingNode",
-    data: {
-      recipe: {
-        inputResources: [
-          { name: "Iron Ore", amount: 50 },
-          { name: "Coal", amount: 10 },
-        ],
-        outputResources: [{ name: "Iron Ingot", amount: 20 }],
-      },
-    },
-    position: { x: 400, y: 100 },
-  },
-];
+const initialNodes = [];
 
-const initialEdges = [{ id: "e1-2", source: "1", target: "2" }];
+const initialEdges = [];
 
 function App() {
   const [nodes, setNodes, onNodesChange] = useNodesState(initialNodes);
@@ -52,19 +34,14 @@ function App() {
     [setEdges]
   );
 
-  const addBuilding = () => {
+  const addBuilding = (recipe) => {
     const newBuildingId = `${nodes.length + 1}`;
     setNodes((ns) => [
       ...ns,
       {
         id: newBuildingId,
         type: "buildingNode",
-        data: {
-          recipe: {
-            inputResources: [],
-            outputResources: [],
-          },
-        },
+        data: recipe,
         position: { x: 200, y: 200 },
       },
     ]);
@@ -88,14 +65,14 @@ function App() {
       style={{
         height: "100vh",
         width: "100vw",
-        color: "black",
+        color: "white",
         maxWidth: "100%",
         maxHeight: "100%",
       }}
+      className="bg-sf-body"
     >
-      <button onClick={addBuilding} className="p-2 rounded border">
-        Add Building
-      </button>
+      <Header addBuilding={addBuilding} sfData={sfData} />
+
       <button onClick={addResource} className="p-2 rounded border">
         Add Resource
       </button>
