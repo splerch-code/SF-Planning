@@ -36,26 +36,46 @@ function App() {
 
   const addBuilding = (recipe) => {
     const newBuildingId = `${nodes.length + 1}`;
-    setNodes((ns) => [
-      ...ns,
-      {
-        id: newBuildingId,
-        type: "buildingNode",
-        data: recipe,
-        position: { x: 200, y: 200 },
+    const maxNodeX = Math.max(...nodes.map((n) => n.position.x), 0);
+    const newBuildingNode = {
+      id: newBuildingId,
+      type: "buildingNode",
+      data: recipe,
+      position: { x: maxNodeX + 400, y: 200 },
+    };
+    const firstY = 200;
+    const newResourceNodes = recipe.products.map((product, index) => ({
+      id: `${newBuildingId}-${index + 1}`,
+      type: "resourceNode",
+      data: {
+        name: product.item.name,
+        amount: product.amount,
+        energy: product.item.energy,
+        sinkPoints: product.item.points,
+        hasSource: true,
       },
-    ]);
+      position: { x: maxNodeX + 900, y: firstY + index * 100 },
+    }));
+    const newEdges = newResourceNodes.map((product) => ({
+      id: `${newBuildingId}->${product.id}`,
+      source: newBuildingId,
+      target: product.id,
+    }));
+
+    setNodes((ns) => [...ns, newBuildingNode, ...newResourceNodes]);
+    setEdges((es) => [...es, ...newEdges]);
   };
 
-  const addResource = () => {
+  const addResource = (resource) => {
     const newResourceId = `${nodes.length + 1}`;
+    let minNodeX = Math.min(...nodes.map((n) => n.position.x), 200);
     setNodes((ns) => [
       ...ns,
       {
         id: newResourceId,
         type: "resourceNode",
-        data: { resource: { name: "New Resource", amount: 0 } },
-        position: { x: 300, y: 300 },
+        data: resource,
+        position: { x: minNodeX - 100, y: 200 },
       },
     ]);
   };
@@ -71,7 +91,11 @@ function App() {
       }}
       className="bg-sf-body"
     >
-      <Header addBuilding={addBuilding} sfData={sfData} />
+      <Header
+        addBuilding={addBuilding}
+        addResource={addResource}
+        sfData={sfData}
+      />
 
       <button onClick={addResource} className="p-2 rounded border">
         Add Resource
@@ -85,6 +109,7 @@ function App() {
         onConnect={onConnect}
         nodeTypes={nodeTypes}
       >
+        <Background />
         <MiniMap />
         <Controls />
       </ReactFlow>

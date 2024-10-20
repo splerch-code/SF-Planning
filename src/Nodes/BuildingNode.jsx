@@ -17,7 +17,7 @@ const BuildingNode = ({ data }) => {
                   alt=""
                   className="h-6 mr-2"
                 />
-                {ingredient.item.name} - {ingredient.amount}
+                {ingredient.item.name} ({ingredient.amount})
               </li>
             ))}
           </ul>
