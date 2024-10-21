@@ -11,7 +11,6 @@ import {
 import ResourceNode from "./Nodes/ResourceNode";
 import BuildingNode from "./Nodes/BuildingNode";
 import Header from "./Components/Header";
-import AddBuildingForm from "./Components/AddBuildingForm";
 import sfData from "./data/sf-data.json";
 
 import "@xyflow/react/dist/style.css";
@@ -30,7 +29,15 @@ function App() {
   const [edges, setEdges, onEdgesChange] = useEdgesState(initialEdges);
 
   const onConnect = useCallback(
-    (params) => setEdges((eds) => addEdge(params, eds)),
+    (params) => {
+      const modifiedParams = {
+        ...params,
+        animated: true,
+        style: { strokeWidth: 4, stroke: "rgba(242, 200, 0, .5)" },
+      };
+
+      setEdges((eds) => addEdge(modifiedParams, eds));
+    },
     [setEdges]
   );
 
@@ -60,6 +67,8 @@ function App() {
       id: `${newBuildingId}->${product.id}`,
       source: newBuildingId,
       target: product.id,
+      animated: true,
+      style: { strokeWidth: 4, stroke: "rgba(242, 200, 0, .5)" },
     }));
 
     setNodes((ns) => [...ns, newBuildingNode, ...newResourceNodes]);
@@ -108,6 +117,7 @@ function App() {
         onEdgesChange={onEdgesChange}
         onConnect={onConnect}
         nodeTypes={nodeTypes}
+        colorMode="dark"
       >
         <Background />
         <MiniMap />

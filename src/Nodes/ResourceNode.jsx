@@ -10,9 +10,19 @@ const ResourceNode = ({ data }) => {
           {data.name} ({data.amount})
         </div>
         {/* Source Handle */}
-        {data.hasSource && <Handle type="target" position="left" />}
+        {data.hasSource && (
+          <Handle
+            type="target"
+            position="left"
+            className="bg-sf border-sf-dark h-4 w-4"
+          />
+        )}
         {/* Target Handle */}
-        <Handle type="source" position="right" />
+        <Handle
+          type="source"
+          position="right"
+          className="bg-sf border-sf-dark h-4 w-4"
+        />
       </div>
     </div>
   );
