@@ -33,7 +33,7 @@ function App() {
       const modifiedParams = {
         ...params,
         animated: true,
-        style: { strokeWidth: 4, stroke: "rgba(242, 200, 0, .5)" },
+        style: { strokeWidth: 12, stroke: "rgba(242, 200, 0, .5)" },
       };
 
       setEdges((eds) => addEdge(modifiedParams, eds));
@@ -68,7 +68,7 @@ function App() {
       source: newBuildingId,
       target: product.id,
       animated: true,
-      style: { strokeWidth: 4, stroke: "rgba(242, 200, 0, .5)" },
+      style: { strokeWidth: 12, stroke: "rgba(242, 200, 0, .5)" },
     }));
 
     setNodes((ns) => [...ns, newBuildingNode, ...newResourceNodes]);
@@ -118,6 +118,7 @@ function App() {
         onConnect={onConnect}
         nodeTypes={nodeTypes}
         colorMode="dark"
+        minZoom={0.1}
       >
         <Background />
         <MiniMap />
