@@ -1,4 +1,4 @@
-import React, { useCallback } from "react";
+import React, { useCallback, useState } from "react";
 import {
   ReactFlow,
   Background,
@@ -27,6 +27,7 @@ const initialEdges = [];
 function App() {
   const [nodes, setNodes, onNodesChange] = useNodesState(initialNodes);
   const [edges, setEdges, onEdgesChange] = useEdgesState(initialEdges);
+  const [selectedNode, setSelectedNode] = useState(null);
 
   const onConnect = useCallback(
     (params) => {
@@ -42,17 +43,17 @@ function App() {
   );
 
   const addBuilding = (recipe) => {
-    const newBuildingId = `${nodes.length + 1}`;
+    const newBuildingId = nodes.length + 1;
     const maxNodeX = Math.max(...nodes.map((n) => n.position.x), 0);
     const newBuildingNode = {
-      id: newBuildingId,
+      id: `${newBuildingId}`,
       type: "buildingNode",
       data: recipe,
       position: { x: maxNodeX + 400, y: 200 },
     };
     const firstY = 200;
     const newResourceNodes = recipe.products.map((product, index) => ({
-      id: `${newBuildingId}-${index + 1}`,
+      id: `${newBuildingId + index + 1}`,
       type: "resourceNode",
       data: {
         name: product.item.name,
@@ -64,8 +65,8 @@ function App() {
       position: { x: maxNodeX + 900, y: firstY + index * 100 },
     }));
     const newEdges = newResourceNodes.map((product) => ({
-      id: `${newBuildingId}->${product.id}`,
-      source: newBuildingId,
+      id: `${newBuildingId} -> ${product.id}`,
+      source: `${newBuildingId}`,
       target: product.id,
       animated: true,
       style: { strokeWidth: 12, stroke: "rgba(242, 200, 0, .5)" },
@@ -115,6 +116,15 @@ function App() {
         edges={edges}
         onNodesChange={onNodesChange}
         onEdgesChange={onEdgesChange}
+        onNodeClick={(e, node) => {
+          setSelectedNode(node);
+          console.log(node);
+        }}
+        onNodeDragStop={(e, node) => setSelectedNode(node)}
+        onPaneClick={(e) => {
+          setSelectedNode(null);
+        }}
+        onEdgeClick={(e, edge) => setSelectedNode(null)}
         onConnect={onConnect}
         nodeTypes={nodeTypes}
         colorMode="dark"
@@ -122,8 +132,13 @@ function App() {
       >
         <Background />
         <MiniMap />
-        <Controls />
       </ReactFlow>
+
+      {selectedNode && (
+        <div className="absolute top-0 m-6 right-0 p-6 w-80 rounded bg-sf-ficsit-dark w-32 text-center">
+          {selectedNode.data.name}
+        </div>
+      )}
     </div>
   );
 }

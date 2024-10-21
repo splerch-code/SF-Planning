@@ -3,7 +3,7 @@ import { Handle } from "@xyflow/react";
 const ResourceNode = ({ data }) => {
   const imagePath = `/sf-images/item-images/${data.name}.png`;
   return (
-    <div className="px-4 py-4 shadow-md rounded-full bg-sf-dark border-2 border-gray-700 resource-node active:border-red-500 hover:bg-sf-body">
+    <div className="px-4 py-4 shadow-md rounded-full bg-sf-dark border-4 border-sf resource-node active:border-red-500 hover:bg-sf-body">
       <img src={imagePath} className="h-8 mx-auto" />
       <div className="font-bold text-center">
         {data.name}

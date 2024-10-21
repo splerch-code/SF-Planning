@@ -5,7 +5,7 @@ import { Handle } from "@xyflow/react";
 const BuildingNode = ({ data }) => {
   let recipe = data;
   return (
-    <div className="px-4 py-2 shadow-md rounded-lg bg-sf-dark border-2 border-sf-ficsit active:border-red-500 building-node hover:bg-sf-body">
+    <div className="px-4 py-2 shadow-md rounded-lg bg-sf-dark border-4 border-sf-ficsit active:border-red-500 building-node hover:bg-sf-body">
       <div className="flex">
         <div className="pr-2 mr-4 border-r border-sf">
           <h4 className="text-lg font-semibold">Inputs</h4>
