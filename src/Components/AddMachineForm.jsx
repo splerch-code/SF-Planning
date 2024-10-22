@@ -97,12 +97,6 @@ const AddMachineForm = ({ addMachine, sfData }) => {
                 );
               })}
             </div>
-            <button
-              onClick={executeAddMachine}
-              className="w-full bg-gray-600 text-white py-2 rounded hover:bg-blue-700"
-            >
-              Submit
-            </button>
           </div>
         </div>
       )}

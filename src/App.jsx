@@ -12,6 +12,7 @@ import MachineNode from "./Nodes/MachineNode";
 import Header from "./Components/Header";
 import sfData from "./data/sf-data.json";
 import InputEdge from "./Edges/InputEdge";
+import EditResource from "./Components/EditResource";
 
 import "@xyflow/react/dist/style.css";
 
@@ -36,17 +37,17 @@ function App() {
 
   const onConnect = useCallback(
     (params) => {
+      clearNodeEdgeSelection();
       const newEdge = {
         ...params,
         animated: true,
-        style: { strokeWidth: 12, stroke: "rgba(242, 200, 0, .5)" },
         data: { amount: 0, label: "test" },
         selectable: true,
         selected: true,
         label: "0",
         type: "inputEdge",
+        onSelectEdge: onSelectEdge,
       };
-      clearNodeEdgeSelection();
       setEdges((eds) => addEdge(newEdge, eds));
       setSelectedEdge(newEdge);
     },
@@ -150,6 +151,12 @@ function App() {
         addResource={addResource}
         sfData={sfData}
       />
+      <EditResource
+        selectedNode={selectedNode}
+        clearAllSelections={clearNodeEdgeSelection}
+        edges={edges}
+        nodes={nodes}
+      />
       <div
         style={{}}
         className="bg-sf-body w-screen h-screen flex-1 items-center justify-center text-white"
@@ -160,7 +167,7 @@ function App() {
           onNodesChange={onNodesChange}
           onEdgesChange={onEdgesChange}
           onNodeClick={onSelectNode}
-          onNodeDragStop={onSelectNode}
+          onNodeDragStop={clearNodeEdgeSelection}
           onPaneClick={onSelectPane}
           onEdgeClick={(e, edge) => {
             setSelectedNode(null);
@@ -172,16 +179,11 @@ function App() {
           colorMode="dark"
           minZoom={0.1}
           multiSelectionKeyCode={null}
+          deleteKeyCode={null}
         >
           <Background />
           <MiniMap />
         </ReactFlow>
-
-        {selectedNode && (
-          <div className="absolute top-0 m-6 right-0 p-6 w-80 rounded bg-sf-ficsit-dark w-32 text-center z-20">
-            {selectedNode.data.name}
-          </div>
-        )}
       </div>
     </div>
   );

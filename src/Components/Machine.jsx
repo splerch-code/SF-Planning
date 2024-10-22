@@ -58,11 +58,13 @@ const Machine = ({
       ingredients: recipe.ingredients.map((ingredient) => ({
         item: mergedItems[ingredient.item],
         amount: ingredient.amount,
+        demand: 0,
         supply: 0,
       })),
       products: recipe.products.map((product) => ({
         item: mergedItems[product.item],
         amount: product.amount,
+        output: 0,
       })),
       time: recipe.time,
       powerUse: recipe.power_use,

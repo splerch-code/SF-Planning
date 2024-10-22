@@ -1,57 +1,53 @@
-import React from "react";
-import { BaseEdge, getBezierPath } from "@xyflow/react";
+import {
+  BaseEdge,
+  EdgeLabelRenderer,
+  getBezierPath,
+  useReactFlow,
+} from "@xyflow/react";
 
-const InputEdge = ({
+export default function InputEdge({
   id,
   sourceX,
   sourceY,
   targetX,
   targetY,
-  sourcePosition,
-  targetPosition,
   data,
-  markerEnd,
-}) => {
-  // You can calculate the path of the edge (e.g., using a Bezier curve)
-  const [edgePath] = getBezierPath({
+  onSelectEdge,
+}) {
+  const { setEdges } = useReactFlow();
+  const [edgePath, labelX, labelY] = getBezierPath({
     sourceX,
     sourceY,
-    sourcePosition,
     targetX,
     targetY,
-    targetPosition,
   });
 
-  // Set dynamic label style based on the edge's `data`
-  const labelStyle = {
-    fontSize: data?.labelFontSize || "12px",
-    color: data?.labelColor || "#000",
-    backgroundColor: data?.labelBackground || "#fff",
-    padding: "2px 5px",
-    borderRadius: "4px",
+  const handleSelectEdge = () => {
+    if (onSelectEdge) {
+      onSelectEdge(null, { id, sourceX, sourceY, targetX, targetY, data });
+    }
   };
-  console.log("InputEdge data: ", data);
 
   return (
     <>
-      {/* The edge line */}
-      <BaseEdge path={edgePath} markerEnd={markerEnd} />
-
-      {/* Edge label */}
-      {data?.label && (
-        <text>
-          <textPath
-            href={`#${id}`}
-            style={labelStyle}
-            startOffset="50%"
-            textAnchor="middle"
-          >
-            {data.label}
-          </textPath>
-        </text>
-      )}
+      <BaseEdge
+        id={id}
+        path={edgePath}
+        style={{ strokeWidth: 12, stroke: "rgba(242, 200, 0, .75)" }}
+      />
+      <EdgeLabelRenderer>
+        <button
+          style={{
+            position: "absolute",
+            transform: `translate(-50%, -50%) translate(${labelX}px,${labelY}px)`,
+            pointerEvents: "all",
+          }}
+          className="p-1 bg-sf-dark rounded text-sf border border-sf"
+          onClick={handleSelectEdge}
+        >
+          {data.amount}
+        </button>
+      </EdgeLabelRenderer>
     </>
   );
-};
-
-export default InputEdge;
+}
