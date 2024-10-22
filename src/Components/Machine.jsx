@@ -1,11 +1,11 @@
 import React from "react";
 
-const Recipe = ({
+const Machine = ({
   recipe,
   items,
   resources,
   machines,
-  addBuilding,
+  addMachine,
   togglePopover,
   ingredientSearch,
   recipeSearch,
@@ -58,6 +58,7 @@ const Recipe = ({
       ingredients: recipe.ingredients.map((ingredient) => ({
         item: mergedItems[ingredient.item],
         amount: ingredient.amount,
+        supply: 0,
       })),
       products: recipe.products.map((product) => ({
         item: mergedItems[product.item],
@@ -66,7 +67,7 @@ const Recipe = ({
       time: recipe.time,
       powerUse: recipe.power_use,
     };
-    addBuilding(recipeNodeData);
+    addMachine(recipeNodeData);
     togglePopover();
   };
 
@@ -102,7 +103,7 @@ const Recipe = ({
           <div className="flex-1"></div>
           <div className="flex-none">
             <img
-              src={`/sf-images/building-images/${machine}.png`}
+              src={`/sf-images/machine-images/${machine}.png`}
               alt=""
               className="h-4 mr-1"
             />
@@ -137,4 +138,4 @@ const Recipe = ({
   );
 };
 
-export default Recipe;
+export default Machine;

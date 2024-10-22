@@ -1,7 +1,7 @@
 import React, { useState } from "react";
-import Recipe from "./Recipe";
+import Machine from "./Machine";
 
-const AddBuildingForm = ({ addBuilding, sfData }) => {
+const AddMachineForm = ({ addMachine, sfData }) => {
   // State to manage popover visibility
   const [isOpen, setIsOpen] = useState(false);
   const [ingredientSearch, setIngredientSearch] = useState("");
@@ -22,9 +22,9 @@ const AddBuildingForm = ({ addBuilding, sfData }) => {
       setProductSearch("");
     }
   };
-  const executeAddBuilding = () => {
+  const executeAddMachine = () => {
     setIsOpen(false);
-    addBuilding();
+    addMachine();
   };
 
   return (
@@ -39,7 +39,7 @@ const AddBuildingForm = ({ addBuilding, sfData }) => {
 
       {/* Popover */}
       {isOpen && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center">
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-10 text-white">
           <div className="relative  z-20 mt-2 p-4 bg-gray-800 rounded shadow-lg border border-gray-200">
             <div className="flex items-top mb-2">
               <h3 className="text-xl flex-1 text-sf">Add Recipe</h3>
@@ -82,13 +82,13 @@ const AddBuildingForm = ({ addBuilding, sfData }) => {
             <div className="w-[600px] max-h-96 bg-gray-900 rounded border border-sf mb-4 p-6 overflow-y-scroll">
               {Object.keys(recipes).map(function (key, index) {
                 return (
-                  <Recipe
+                  <Machine
                     key={key}
                     recipe={recipes[key]}
                     items={items}
                     resources={resources}
                     machines={machines}
-                    addBuilding={addBuilding}
+                    addMachine={addMachine}
                     togglePopover={togglePopover}
                     ingredientSearch={ingredientSearch}
                     recipeSearch={recipeSearch}
@@ -98,7 +98,7 @@ const AddBuildingForm = ({ addBuilding, sfData }) => {
               })}
             </div>
             <button
-              onClick={executeAddBuilding}
+              onClick={executeAddMachine}
               className="w-full bg-gray-600 text-white py-2 rounded hover:bg-blue-700"
             >
               Submit
@@ -110,4 +110,4 @@ const AddBuildingForm = ({ addBuilding, sfData }) => {
   );
 };
 
-export default AddBuildingForm;
+export default AddMachineForm;

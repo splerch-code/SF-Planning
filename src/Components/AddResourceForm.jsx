@@ -20,7 +20,7 @@ const AddResourceForm = ({ addResource, sfData }) => {
         Add Resource Node
       </button>
       {isOpen && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center">
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-10 text-white">
           <div className="relative  z-20 mt-2 p-4 bg-gray-800 rounded shadow-lg border border-gray-200">
             <div className="flex items-top mb-4">
               <h3 className="text-xl flex-1 text-sf">Add Resource</h3>

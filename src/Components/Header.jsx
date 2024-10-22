@@ -1,16 +1,16 @@
 import React from "react";
-import AddBuildingForm from "./AddBuildingForm";
+import AddMachineForm from "./AddMachineForm";
 import AddResourceForm from "./AddResourceForm";
 
-const Header = ({ addBuilding, addResource, sfData }) => {
+const Header = ({ addMachine, addResource, sfData }) => {
   return (
-    <div className="w-screen bg-black py-6 bg-sf-dark px-6 container mx-auto flex items-center absolute top-0 left-0 z-10">
+    <header className="bg-black py-4 bg-sf-dark px-6 px-auto flex items-center z-10">
       <div className="flex-none text-xl text-sf mr-4">Satisfactory Planner</div>
       <div className="flex-none">
         <AddResourceForm addResource={addResource} sfData={sfData} />
-        <AddBuildingForm addBuilding={addBuilding} sfData={sfData} />
+        <AddMachineForm addMachine={addMachine} sfData={sfData} />
       </div>
-    </div>
+    </header>
   );
 };
 
