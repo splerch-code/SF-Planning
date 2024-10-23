@@ -1,6 +1,12 @@
 import { useState } from "react";
 
-const EditResource = ({ selectedNode, edges, nodes, clearAllSelections }) => {
+const EditResource = ({
+  selectedNode,
+  clearAllSelections,
+  setNodes,
+  setEdges,
+  edges,
+}) => {
   if (!selectedNode) {
     return null;
   }
@@ -9,18 +15,25 @@ const EditResource = ({ selectedNode, edges, nodes, clearAllSelections }) => {
   }
 
   const [amount, setAmount] = useState(selectedNode.data.amount);
-  const [outputEdges, setOutputEdges] = useState(
-    edges.filter((edge) => edge.source === selectedNode.id)
-  );
-  const outputNodes = outputEdges.reduce((acc, edge) => {
-    const node = nodes.find((n) => n.id === edge.target);
-    if (node) {
-      acc[edge.target] = node;
-    }
-    return acc;
-  }, {});
 
-  console.log(outputNodes);
+  const handleUpdate = () => {
+    if (amount < 0) {
+      alert("Amount must be a positive number.");
+      return;
+    }
+    const updatedNode = selectedNode;
+    updatedNode.data.amount = amount;
+    setNodes((ns) =>
+      ns.map((node) => (node.id === selectedNode.id ? updatedNode : node))
+    );
+    clearAllSelections();
+  };
+
+  const handleDelete = () => {
+    setNodes((ns) => ns.filter((node) => node.id !== selectedNode.id));
+    setEdges((es) => es.filter((edge) => edge.source !== selectedNode.id));
+    clearAllSelections();
+  };
 
   return (
     <>
@@ -51,7 +64,7 @@ const EditResource = ({ selectedNode, edges, nodes, clearAllSelections }) => {
           <div className="p-6">
             <div className="mb-6">
               <div className="grid grid-cols-2 gap-4">
-                <div class="flex flex-col">
+                <div className="flex flex-col">
                   <label className="font-bold flex-1 text-lg mb-2">
                     Output Amount
                   </label>
@@ -61,15 +74,16 @@ const EditResource = ({ selectedNode, edges, nodes, clearAllSelections }) => {
                       className="mt-1 w-20 p-2 border border-gray-300 bg-gray-800 rounded focus:ring-blue-500 focus:border focus:border-blue-500 mr-2"
                       value={amount}
                       onChange={(e) => setAmount(e.target.value)}
+                      min={0}
+                      autoFocus
                     />
                     <span className="text-lg">{0} Used</span>
                   </div>
                 </div>
                 <div className="flex flex-col">
                   <div className="flex-1 mb-2 font-bold text-lg">
-                    Destinations
+                    Destinations (under construction)
                   </div>
-                  {outputEdges.map((edge) => {})}
                 </div>
               </div>
             </div>
@@ -80,10 +94,16 @@ const EditResource = ({ selectedNode, edges, nodes, clearAllSelections }) => {
               >
                 Cancel
               </button>
-              <button className="flex-1  text-red-500 border-2 border-red-500 rounded py-2 mx-2 font-bold hover:bg-red-500 hover:text-white">
+              <button
+                className="flex-1  text-red-500 border-2 border-red-500 rounded py-2 mx-2 font-bold hover:bg-red-500 hover:text-white"
+                onClick={handleDelete}
+              >
                 Delete Resource
               </button>
-              <button className="flex-1 bg-sf-ficsit-dark text-sf-ficsit rounded py-2 mx-2 font-bold hover:bg-opacity-50">
+              <button
+                className="flex-1 bg-sf-ficsit-dark text-sf-ficsit rounded py-2 mx-2 font-bold hover:bg-opacity-50"
+                onClick={handleUpdate}
+              >
                 Update Resource
               </button>
             </div>

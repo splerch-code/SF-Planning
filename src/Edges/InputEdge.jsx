@@ -1,9 +1,4 @@
-import {
-  BaseEdge,
-  EdgeLabelRenderer,
-  getBezierPath,
-  useReactFlow,
-} from "@xyflow/react";
+import { BaseEdge, EdgeLabelRenderer, getBezierPath } from "@xyflow/react";
 
 export default function InputEdge({
   id,
@@ -14,12 +9,13 @@ export default function InputEdge({
   data,
   onSelectEdge,
 }) {
-  const { setEdges } = useReactFlow();
   const [edgePath, labelX, labelY] = getBezierPath({
     sourceX,
     sourceY,
     targetX,
     targetY,
+    sourcePosition: "right",
+    targetPosition: "left",
   });
 
   const handleSelectEdge = () => {
@@ -42,7 +38,7 @@ export default function InputEdge({
             transform: `translate(-50%, -50%) translate(${labelX}px,${labelY}px)`,
             pointerEvents: "all",
           }}
-          className="p-1 bg-sf-dark rounded text-sf border border-sf"
+          className="py-1 px-2 bg-sf-dark rounded-full text-white font-bold border-2 border-sf"
           onClick={handleSelectEdge}
         >
           {data.amount}

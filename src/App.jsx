@@ -13,6 +13,7 @@ import Header from "./Components/Header";
 import sfData from "./data/sf-data.json";
 import InputEdge from "./Edges/InputEdge";
 import EditResource from "./Components/EditResource";
+import EditInput from "./Components/EditInput";
 
 import "@xyflow/react/dist/style.css";
 
@@ -37,11 +38,17 @@ function App() {
 
   const onConnect = useCallback(
     (params) => {
-      clearNodeEdgeSelection();
+      if (
+        params.sourceHandle.split("-")[1] != params.targetHandle.split("-")[1]
+      ) {
+        alert("Cannot connect nodes of different resources");
+        return;
+      }
       const newEdge = {
+        id: `${params.source} -> ${params.target}`,
         ...params,
         animated: true,
-        data: { amount: 0, label: "test" },
+        data: { amount: 0 },
         selectable: true,
         selected: true,
         label: "0",
@@ -55,9 +62,10 @@ function App() {
   );
 
   const addMachine = (recipe) => {
-    const newMachineId = nodes.length + 1;
+    let nodeList = [{ id: "0" }, ...nodes];
+    const newMachineId = Math.max(...nodeList.map((n) => parseInt(n.id))) + 1;
     const maxNodeX = Math.max(...nodes.map((n) => n.position.x), 0);
-    let data = { ...recipe, multiplier: 1 };
+    let data = { ...recipe, multiplier: 1, id: `${newMachineId}` };
     const newMachineNode = {
       id: `${newMachineId}`,
       type: "machineNode",
@@ -66,46 +74,18 @@ function App() {
       selectable: true,
       selected: true,
     };
-    const firstY = 200;
-    const newResourceNodes = recipe.products.map((product, index) => ({
-      id: `${newMachineId + index + 1}`,
-      type: "resourceNode",
-      data: {
-        name: product.item.name,
-        used: 0,
-        amount: product.amount,
-        energy: product.item.energy,
-        sinkPoints: product.item.points,
-        hasSource: true,
-      },
-      position: { x: maxNodeX + 900, y: firstY + index * 100 },
-      selectable: false,
-    }));
-    const newEdges = newResourceNodes.map((product) => ({
-      id: `${newMachineId} -> ${product.id}`,
-      source: `${newMachineId}`,
-      target: product.id,
-      animated: true,
-      style: { strokeWidth: 12, stroke: "#5D5D5D77" },
-      data: { test: "data" },
-      selectable: false,
-    }));
     clearNodeEdgeSelection();
-    setNodes((ns) => [
-      ...ns.map((node) => ({ ...node, selected: false })),
-      newMachineNode,
-      ...newResourceNodes,
-    ]);
-    setEdges((es) => [...es, ...newEdges]);
+    setNodes((ns) => [...ns, newMachineNode]);
     setSelectedNode(newMachineNode);
   };
 
   const addResource = (resource) => {
-    const newResourceId = `${nodes.length + 1}`;
+    let nodeList = [{ id: "0" }, ...nodes];
+    const newResourceId = Math.max(...nodeList.map((n) => parseInt(n.id))) + 1;
     let minNodeX = Math.min(...nodes.map((n) => n.position.x), 200);
-    let data = { ...resource, amount: 0, used: 0 };
+    let data = { ...resource, amount: 0, used: 0, id: `${newResourceId}` };
     const newResourceNode = {
-      id: newResourceId,
+      id: `${newResourceId}`,
       type: "resourceNode",
       data: data,
       position: { x: minNodeX - 100, y: 200 },
@@ -122,7 +102,6 @@ function App() {
 
   const onSelectNode = (e, node) => {
     setSelectedEdge(null);
-    console.log(node);
     if (node.selectable) {
       setSelectedNode(node);
     }
@@ -156,11 +135,17 @@ function App() {
         clearAllSelections={clearNodeEdgeSelection}
         edges={edges}
         nodes={nodes}
+        setNodes={setNodes}
+        setEdges={setEdges}
       />
-      <div
-        style={{}}
-        className="bg-sf-body w-screen h-screen flex-1 items-center justify-center text-white"
-      >
+      <EditInput
+        selectedEdge={selectedEdge}
+        edges={edges}
+        nodes={nodes}
+        setEdges={setEdges}
+        clearAllSelections={clearNodeEdgeSelection}
+      />
+      <div className="bg-sf-body w-screen h-screen flex-1 items-center justify-center text-white">
         <ReactFlow
           nodes={nodes}
           edges={edges}
@@ -170,7 +155,7 @@ function App() {
           onNodeDragStop={clearNodeEdgeSelection}
           onPaneClick={onSelectPane}
           onEdgeClick={(e, edge) => {
-            setSelectedNode(null);
+            setSelectedEdge(edge);
             console.log(edge);
           }}
           onConnect={onConnect}

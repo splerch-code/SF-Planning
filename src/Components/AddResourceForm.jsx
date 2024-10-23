@@ -37,6 +37,7 @@ const AddResourceForm = ({ addResource, sfData }) => {
               placeholder="search items"
               value={search}
               onChange={(e) => setSearch(e.target.value)}
+              autoFocus
             />
             <div className="w-80 border border-sf bg-gray-900 p-6 rounded mb-4 h-72 overflow-y-auto">
               {Object.keys(items).map(function (key, index) {
