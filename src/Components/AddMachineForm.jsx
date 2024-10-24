@@ -67,6 +67,7 @@ const AddMachineForm = ({ addMachine, sfData }) => {
                   placeholder="Search recipes"
                   onChange={(e) => setRecipeSearch(e.target.value)}
                   value={recipeSearch}
+                  autoFocus
                 />
               </div>
               <div>

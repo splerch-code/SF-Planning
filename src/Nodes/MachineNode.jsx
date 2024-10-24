@@ -1,10 +1,20 @@
 import React from "react";
-import { Handle, useEdges } from "@xyflow/react";
+import { Handle, useEdges, useNodes } from "@xyflow/react";
+import ResourceCompare from "../Components/ResourceCompare";
 
 const MachineNode = ({ data }) => {
-  let outPerMin = 60 / data.time;
+  let perMinuteFactor = 60 / data.time;
   let nIngredients = data.ingredients.length;
   let nOutputs = data.products.length;
+  let inputEdges = useEdges().filter((edge) => edge.target === data.id);
+  let outputEdges = useEdges().filter((edge) => edge.source === data.id);
+  const multiplier = data.multiplier || 1;
+
+  const getSumItems = (edges, itemName) => {
+    return edges
+      .filter((edge) => edge.sourceHandle.split("-")[1] === itemName)
+      .reduce((sum, edge) => sum + edge.data.amount, 0);
+  };
 
   return (
     <div className="shadow-md rounded-lg bg-sf-dark border-4 border-sf-ficsit active:border-red-500 building-node hover:bg-sf-body">
@@ -21,7 +31,14 @@ const MachineNode = ({ data }) => {
                   alt=""
                   className="h-6 mr-2"
                 />
-                {ingredient.item.name} ({ingredient.amount})
+                <span className="mr-2">{ingredient.item.name}: </span>
+                <span className="font-bold">
+                  <ResourceCompare
+                    nItems={getSumItems(inputEdges, ingredient.item.name)}
+                    nTarget={ingredient.amount * multiplier * perMinuteFactor}
+                    isOutput={false}
+                  />
+                </span>
               </div>
             ))}
           </div>
@@ -44,7 +61,14 @@ const MachineNode = ({ data }) => {
                 key={index}
                 className="flex-grow flex items-center py-3 border-y border-sf px-2"
               >
-                {product.item.name} ({product.amount})
+                <span className="mr-2">{product.item.name}: </span>
+                <span className="font-bold">
+                  <ResourceCompare
+                    nItems={getSumItems(outputEdges, product.item.name)}
+                    nTarget={product.amount * multiplier * perMinuteFactor}
+                    isOutput={true}
+                  />
+                </span>
                 <img
                   src={`/sf-images/item-images/${product.item.name}.png`}
                   alt=""

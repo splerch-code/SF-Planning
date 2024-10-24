@@ -34,6 +34,7 @@ const ResourceNode = ({ data }) => {
           type="target"
           position="left"
           className="bg-sf border-sf-dark h-4 w-4"
+          id={`${data.id}-${data.name}`}
         />
       )}
       <Handle

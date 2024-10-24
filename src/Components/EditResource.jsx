@@ -73,7 +73,7 @@ const EditResource = ({
                       type="number"
                       className="mt-1 w-20 p-2 border border-gray-300 bg-gray-800 rounded focus:ring-blue-500 focus:border focus:border-blue-500 mr-2"
                       value={amount}
-                      onChange={(e) => setAmount(e.target.value)}
+                      onChange={(e) => setAmount(parseFloat(e.target.value))}
                       min={0}
                       autoFocus
                     />

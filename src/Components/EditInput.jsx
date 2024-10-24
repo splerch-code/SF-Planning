@@ -16,6 +16,26 @@ const EditInput = ({
   }
   const sourceNode = nodes.find((n) => n.id === selectedEdge.source);
   const targetNode = nodes.find((n) => n.id === selectedEdge.target);
+  const getSourceOutput = () => {
+    if (sourceNode.type === "resourceNode") {
+      return sourceNode.data.amount;
+    } else if (sourceNode.type === "buildingNode") {
+      let product = sourceNode.data.products.find(
+        (p) => p.item.name === selectedEdge.data.name
+      );
+      return (product * sourceNode.data.multiplier * sourceNode.data.time) / 60;
+    }
+  };
+  const getTargetInput = () => {
+    let ingredient = targetNode.data.ingredients.find(
+      (ing) => ing.item.name === selectedEdge.data.name
+    );
+    return (
+      (ingredient * targetNode.data.multiplier * targetNode.data.time) / 60
+    );
+  };
+  const sourceOutput = getSourceOutput();
+  const targetInput = getTargetInput();
 
   const [amount, setAmount] = useState(selectedEdge.data.amount || 0);
 
@@ -42,11 +62,11 @@ const EditInput = ({
         <div className="relative bg-sf-dark border-2 border-sf rounded-lg shadow-lg text-white">
           <h2 className="text-lg font-semibold p-4 bg-sf-ficsit-dark rounded-t-lg flex items-center">
             <img
-              src={`sf-images/item-images/${sourceNode.data.name}.png`}
+              src={`sf-images/item-images/${selectedEdge.data.name}.png`}
               alt=""
               className="h-8 mr-2 flex-none"
             />
-            <span className="flex-none">{sourceNode.data.name}</span>
+            <span className="flex-none">{selectedEdge.data.name}</span>
             <img
               src={`sf-images/building-images/${targetNode.data.machine}.png`}
               className="h-8 mx-2 flex-2"
@@ -61,44 +81,45 @@ const EditInput = ({
           </h2>
           <div className="p-6">
             <div className="mb-6">
-              <input
-                type="range"
-                className={`w-96 ${
-                  parseFloat(amount) > sourceNode.data.amount
-                    ? "accent-red-500"
-                    : "accent-sf"
-                } mx-1`}
-                min={0}
-                max={sourceNode.data.amount}
-                value={amount}
-                onChange={(e) => setAmount(parseFloat(e.target.value || "0"))}
-                step={0.0001}
-              />
-              <div className="flex items-center">
+              <div className="flex items-center mb-4">
+                <div className="flex-grow"></div>
                 <input
                   type="number"
                   min={0}
                   className="mt-1 w-24 p-2 border border-gray-300 bg-gray-800 rounded focus:ring-blue-500 focus:border focus:border-blue-500 mr-2 mx-1"
                   value={amount}
                   onChange={(e) => setAmount(parseFloat(e.target.value || "0"))}
+                  autoFocus
                 />
-                <span className="flex-none">/ {sourceNode.data.amount}</span>
+                <span className="flex-none">/ {sourceOutput}</span>
                 <div className="flex-grow"></div>
                 <input
                   type="number"
                   min={0}
                   className="mt-1 w-24 p-2 border border-gray-300 bg-gray-800 rounded focus:ring-blue-500 focus:border focus:border-blue-500 mr-2 mx-1"
-                  value={(amount / sourceNode.data.amount) * 100}
+                  value={(amount / sourceOutput) * 100}
                   onChange={(e) =>
                     setAmount(
-                      (parseFloat(e.target.value || "0") *
-                        sourceNode.data.amount) /
-                        100
+                      (parseFloat(e.target.value || "0") * sourceOutput) / 100
                     )
                   }
                 />
                 <span className="flex-none">%</span>
+                <div className="flex-grow"></div>
               </div>
+              <input
+                type="range"
+                className={`w-96 ${
+                  parseFloat(amount) > sourceOutput
+                    ? "accent-red-500"
+                    : "accent-sf"
+                } mb-2`}
+                min={0}
+                max={sourceOutput}
+                value={amount}
+                onChange={(e) => setAmount(parseFloat(e.target.value || "0"))}
+                step={0.0001}
+              />
             </div>
             <div className="flex">
               <button

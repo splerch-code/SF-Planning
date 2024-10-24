@@ -14,6 +14,7 @@ import sfData from "./data/sf-data.json";
 import InputEdge from "./Edges/InputEdge";
 import EditResource from "./Components/EditResource";
 import EditInput from "./Components/EditInput";
+import EditMachine from "./Components/EditMachine";
 
 import "@xyflow/react/dist/style.css";
 
@@ -38,6 +39,7 @@ function App() {
 
   const onConnect = useCallback(
     (params) => {
+      clearNodeEdgeSelection();
       if (
         params.sourceHandle.split("-")[1] != params.targetHandle.split("-")[1]
       ) {
@@ -48,7 +50,7 @@ function App() {
         id: `${params.source} -> ${params.target}`,
         ...params,
         animated: true,
-        data: { amount: 0 },
+        data: { amount: 0, name: params.sourceHandle.split("-")[1] },
         selectable: true,
         selected: true,
         label: "0",
@@ -144,6 +146,11 @@ function App() {
         nodes={nodes}
         setEdges={setEdges}
         clearAllSelections={clearNodeEdgeSelection}
+      />
+      <EditMachine
+        selectedNode={selectedNode}
+        clearAllSelections={clearNodeEdgeSelection}
+        setNodes={setNodes}
       />
       <div className="bg-sf-body w-screen h-screen flex-1 items-center justify-center text-white">
         <ReactFlow

@@ -38,6 +38,7 @@ const AddResourceForm = ({ addResource, sfData }) => {
               value={search}
               onChange={(e) => setSearch(e.target.value)}
               autoFocus
+              tabIndex={1}
             />
             <div className="w-80 border border-sf bg-gray-900 p-6 rounded mb-4 h-72 overflow-y-auto">
               {Object.keys(items).map(function (key, index) {
@@ -48,6 +49,7 @@ const AddResourceForm = ({ addResource, sfData }) => {
                     addResource={addResource}
                     togglePopover={togglePopover}
                     search={search}
+                    index={index}
                   />
                 );
               })}
