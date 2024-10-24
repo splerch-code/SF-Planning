@@ -1,0 +1,694 @@
+{
+  "nodes": [
+    {
+      "id": "1",
+      "type": "resourceNode",
+      "data": {
+        "name": "Compacted Coal",
+        "amount": 103.3333,
+        "energy": 630,
+        "sinkPoints": 28,
+        "hasSource": false,
+        "used": 0,
+        "id": "1"
+      },
+      "position": {
+        "x": 1189.6137542610966,
+        "y": -86.23597850950793
+      },
+      "selectable": true,
+      "selected": false,
+      "measured": {
+        "width": 175,
+        "height": 120
+      },
+      "dragging": false
+    },
+    {
+      "id": "2",
+      "type": "machineNode",
+      "data": {
+        "name": "Turbofuel",
+        "machine": "Refinery",
+        "ingredients": [
+          {
+            "item": {
+              "name": "Fuel",
+              "energy": 750,
+              "form": "RF_LIQUID",
+              "points": 75
+            },
+            "amount": 6,
+            "demand": 0,
+            "supply": 0
+          },
+          {
+            "item": {
+              "name": "Compacted Coal",
+              "energy": 630,
+              "form": "RF_SOLID",
+              "points": 28
+            },
+            "amount": 4,
+            "demand": 0,
+            "supply": 0
+          }
+        ],
+        "products": [
+          {
+            "item": {
+              "name": "Turbofuel",
+              "energy": 2000,
+              "form": "RF_LIQUID",
+              "points": 225
+            },
+            "amount": 5,
+            "output": 0
+          }
+        ],
+        "time": 16,
+        "powerUse": 30,
+        "multiplier": 6.8889,
+        "id": "2"
+      },
+      "position": {
+        "x": 1540.5881714961895,
+        "y": -165.7858283255199
+      },
+      "selectable": true,
+      "selected": false,
+      "measured": {
+        "width": 848,
+        "height": 116
+      },
+      "dragging": false
+    },
+    {
+      "id": "3",
+      "type": "machineNode",
+      "data": {
+        "name": "Fuel",
+        "machine": "Refinery",
+        "ingredients": [
+          {
+            "item": {
+              "name": "Crude Oil",
+              "energy": 320,
+              "form": "RF_LIQUID",
+              "points": 30
+            },
+            "amount": 6,
+            "demand": 0,
+            "supply": 0
+          }
+        ],
+        "products": [
+          {
+            "item": {
+              "name": "Fuel",
+              "energy": 750,
+              "form": "RF_LIQUID",
+              "points": 75
+            },
+            "amount": 4,
+            "output": 0
+          },
+          {
+            "item": {
+              "name": "Polymer Resin",
+              "energy": 0,
+              "form": "RF_SOLID",
+              "points": 12
+            },
+            "amount": 3,
+            "output": 0
+          }
+        ],
+        "time": 6,
+        "powerUse": 30,
+        "multiplier": 3.875,
+        "id": "3"
+      },
+      "position": {
+        "x": 344.5881714961895,
+        "y": -304
+      },
+      "selectable": true,
+      "selected": false,
+      "measured": {
+        "width": 686,
+        "height": 116
+      },
+      "dragging": false
+    },
+    {
+      "id": "4",
+      "type": "resourceNode",
+      "data": {
+        "name": "Crude Oil",
+        "amount": 240,
+        "energy": 320,
+        "sinkPoints": 30,
+        "hasSource": false,
+        "used": 0,
+        "id": "4"
+      },
+      "position": {
+        "x": -60.812467126721955,
+        "y": 77.45285030046881
+      },
+      "selectable": true,
+      "selected": false,
+      "measured": {
+        "width": 110,
+        "height": 120
+      },
+      "dragging": false
+    },
+    {
+      "id": "5",
+      "type": "machineNode",
+      "data": {
+        "name": "Smokeless Powder",
+        "machine": "Refinery",
+        "ingredients": [
+          {
+            "item": {
+              "name": "Black Powder",
+              "energy": 0,
+              "form": "RF_SOLID",
+              "points": 14
+            },
+            "amount": 2,
+            "demand": 0,
+            "supply": 0
+          },
+          {
+            "item": {
+              "name": "Heavy Oil Residue",
+              "energy": 400,
+              "form": "RF_LIQUID",
+              "points": 30
+            },
+            "amount": 1,
+            "demand": 0,
+            "supply": 0
+          }
+        ],
+        "products": [
+          {
+            "item": {
+              "name": "Smokeless Powder",
+              "energy": 0,
+              "form": "RF_SOLID",
+              "points": 58
+            },
+            "amount": 2,
+            "output": 0
+          }
+        ],
+        "time": 6,
+        "powerUse": 30,
+        "multiplier": 0.25,
+        "id": "5"
+      },
+      "position": {
+        "x": 1160.5881714961895,
+        "y": 626
+      },
+      "selectable": true,
+      "selected": false,
+      "measured": {
+        "width": 660,
+        "height": 116
+      },
+      "dragging": false
+    },
+    {
+      "id": "6",
+      "type": "machineNode",
+      "data": {
+        "name": "Plastic",
+        "machine": "Refinery",
+        "ingredients": [
+          {
+            "item": {
+              "name": "Crude Oil",
+              "energy": 320,
+              "form": "RF_LIQUID",
+              "points": 30
+            },
+            "amount": 3,
+            "demand": 0,
+            "supply": 0
+          }
+        ],
+        "products": [
+          {
+            "item": {
+              "name": "Plastic",
+              "energy": 0,
+              "form": "RF_SOLID",
+              "points": 75
+            },
+            "amount": 2,
+            "output": 0
+          },
+          {
+            "item": {
+              "name": "Heavy Oil Residue",
+              "energy": 400,
+              "form": "RF_LIQUID",
+              "points": 30
+            },
+            "amount": 1,
+            "output": 0
+          }
+        ],
+        "time": 6,
+        "powerUse": 30,
+        "multiplier": 0.25,
+        "id": "6"
+      },
+      "position": {
+        "x": 148.41129321139562,
+        "y": 390.0628662660416
+      },
+      "selectable": true,
+      "selected": false,
+      "measured": {
+        "width": 614,
+        "height": 116
+      },
+      "dragging": false
+    },
+    {
+      "id": "7",
+      "type": "machineNode",
+      "data": {
+        "name": "Residual Plastic",
+        "machine": "Refinery",
+        "ingredients": [
+          {
+            "item": {
+              "name": "Polymer Resin",
+              "energy": 0,
+              "form": "RF_SOLID",
+              "points": 12
+            },
+            "amount": 6,
+            "demand": 0,
+            "supply": 0
+          },
+          {
+            "item": {
+              "name": "Water",
+              "energy": 0,
+              "form": "RF_LIQUID",
+              "points": 5
+            },
+            "amount": 2,
+            "demand": 0,
+            "supply": 0
+          }
+        ],
+        "products": [
+          {
+            "item": {
+              "name": "Plastic",
+              "energy": 0,
+              "form": "RF_SOLID",
+              "points": 75
+            },
+            "amount": 2,
+            "output": 0
+          }
+        ],
+        "time": 6,
+        "powerUse": 30,
+        "multiplier": 1.9375,
+        "id": "7"
+      },
+      "position": {
+        "x": 1013.7709100376487,
+        "y": 187.4528503004688
+      },
+      "selectable": true,
+      "selected": false,
+      "measured": {
+        "width": 641,
+        "height": 116
+      },
+      "dragging": false
+    },
+    {
+      "id": "8",
+      "type": "resourceNode",
+      "data": {
+        "name": "Water",
+        "amount": 38.75,
+        "energy": 0,
+        "sinkPoints": 5,
+        "hasSource": false,
+        "used": 0,
+        "id": "8"
+      },
+      "position": {
+        "x": 720.5947934199882,
+        "y": 116.08177696995847
+      },
+      "selectable": true,
+      "selected": true,
+      "measured": {
+        "width": 129,
+        "height": 120
+      },
+      "dragging": false
+    },
+    {
+      "id": "9",
+      "type": "resourceNode",
+      "data": {
+        "name": "Black Powder",
+        "amount": 5,
+        "energy": 0,
+        "sinkPoints": 14,
+        "hasSource": false,
+        "used": 0,
+        "id": "9"
+      },
+      "position": {
+        "x": 962.2909985466293,
+        "y": 463.15545359047474
+      },
+      "selectable": true,
+      "selected": false,
+      "measured": {
+        "width": 141,
+        "height": 120
+      },
+      "dragging": false
+    },
+    {
+      "id": "10",
+      "type": "machineNode",
+      "data": {
+        "name": "Empty Canister",
+        "machine": "Constructor",
+        "ingredients": [
+          {
+            "item": {
+              "name": "Plastic",
+              "energy": 0,
+              "form": "RF_SOLID",
+              "points": 75
+            },
+            "amount": 2,
+            "demand": 0,
+            "supply": 0
+          }
+        ],
+        "products": [
+          {
+            "item": {
+              "name": "Empty Canister",
+              "energy": 0,
+              "form": "RF_SOLID",
+              "points": 60
+            },
+            "amount": 4,
+            "output": 0
+          }
+        ],
+        "time": 4,
+        "powerUse": 4,
+        "multiplier": 0.0833333,
+        "id": "10"
+      },
+      "position": {
+        "x": 1728.9582765619516,
+        "y": 358.45553063984636
+      },
+      "selectable": true,
+      "selected": false,
+      "measured": {
+        "width": 764,
+        "height": 116
+      },
+      "dragging": false
+    },
+    {
+      "id": "11",
+      "type": "machineNode",
+      "data": {
+        "name": "Packaged Turbofuel",
+        "machine": "Packager",
+        "ingredients": [
+          {
+            "item": {
+              "name": "Turbofuel",
+              "energy": 2000,
+              "form": "RF_LIQUID",
+              "points": 225
+            },
+            "amount": 2,
+            "demand": 0,
+            "supply": 0
+          },
+          {
+            "item": {
+              "name": "Empty Canister",
+              "energy": 0,
+              "form": "RF_SOLID",
+              "points": 60
+            },
+            "amount": 2,
+            "demand": 0,
+            "supply": 0
+          }
+        ],
+        "products": [
+          {
+            "item": {
+              "name": "Packaged Turbofuel",
+              "energy": 2000,
+              "form": "RF_SOLID",
+              "points": 570
+            },
+            "amount": 2,
+            "output": 0
+          }
+        ],
+        "time": 6,
+        "powerUse": 10,
+        "multiplier": 0.25,
+        "id": "11"
+      },
+      "position": {
+        "x": 2585.8874181895508,
+        "y": 306.23281836932335
+      },
+      "selectable": true,
+      "selected": false,
+      "measured": {
+        "width": 632,
+        "height": 116
+      },
+      "dragging": false
+    }
+  ],
+  "edges": [
+    {
+      "id": "3 -> 2",
+      "source": "3",
+      "sourceHandle": "3-Fuel",
+      "target": "2",
+      "targetHandle": "2-Fuel",
+      "animated": true,
+      "data": {
+        "amount": 155,
+        "name": "Fuel"
+      },
+      "selectable": true,
+      "selected": false,
+      "label": "0",
+      "type": "inputEdge"
+    },
+    {
+      "id": "1 -> 2",
+      "source": "1",
+      "sourceHandle": "1-Compacted Coal",
+      "target": "2",
+      "targetHandle": "2-Compacted Coal",
+      "animated": true,
+      "data": {
+        "amount": 103.333,
+        "name": "Compacted Coal"
+      },
+      "selectable": true,
+      "selected": false,
+      "label": "0",
+      "type": "inputEdge"
+    },
+    {
+      "id": "4 -> 3",
+      "source": "4",
+      "sourceHandle": "4-Crude Oil",
+      "target": "3",
+      "targetHandle": "3-Crude Oil",
+      "animated": true,
+      "data": {
+        "amount": 232.5,
+        "name": "Crude Oil"
+      },
+      "selectable": true,
+      "selected": false,
+      "label": "0",
+      "type": "inputEdge"
+    },
+    {
+      "id": "4 -> 6",
+      "source": "4",
+      "sourceHandle": "4-Crude Oil",
+      "target": "6",
+      "targetHandle": "6-Crude Oil",
+      "animated": true,
+      "data": {
+        "amount": 7.5,
+        "name": "Crude Oil"
+      },
+      "selectable": true,
+      "selected": false,
+      "label": "0",
+      "type": "inputEdge"
+    },
+    {
+      "id": "6 -> 5",
+      "source": "6",
+      "sourceHandle": "6-Heavy Oil Residue",
+      "target": "5",
+      "targetHandle": "5-Heavy Oil Residue",
+      "animated": true,
+      "data": {
+        "amount": 2.5,
+        "name": "Heavy Oil Residue"
+      },
+      "selectable": true,
+      "selected": false,
+      "label": "0",
+      "type": "inputEdge"
+    },
+    {
+      "id": "3 -> 7",
+      "source": "3",
+      "sourceHandle": "3-Polymer Resin",
+      "target": "7",
+      "targetHandle": "7-Polymer Resin",
+      "animated": true,
+      "data": {
+        "amount": 116.25,
+        "name": "Polymer Resin"
+      },
+      "selectable": true,
+      "selected": false,
+      "label": "0",
+      "type": "inputEdge"
+    },
+    {
+      "id": "8 -> 7",
+      "source": "8",
+      "sourceHandle": "8-Water",
+      "target": "7",
+      "targetHandle": "7-Water",
+      "animated": true,
+      "data": {
+        "amount": 38.75,
+        "name": "Water"
+      },
+      "selectable": true,
+      "selected": false,
+      "label": "0",
+      "type": "inputEdge"
+    },
+    {
+      "id": "9 -> 5",
+      "source": "9",
+      "sourceHandle": "9-Black Powder",
+      "target": "5",
+      "targetHandle": "5-Black Powder",
+      "animated": true,
+      "data": {
+        "amount": 5,
+        "name": "Black Powder"
+      },
+      "selectable": true,
+      "selected": false,
+      "label": "0",
+      "type": "inputEdge"
+    },
+    {
+      "id": "7 -> 10",
+      "source": "7",
+      "sourceHandle": "7-Plastic",
+      "target": "10",
+      "targetHandle": "10-Plastic",
+      "animated": true,
+      "data": {
+        "amount": 0,
+        "name": "Plastic"
+      },
+      "selectable": true,
+      "selected": false,
+      "label": "0",
+      "type": "inputEdge"
+    },
+    {
+      "id": "6 -> 10",
+      "source": "6",
+      "sourceHandle": "6-Plastic",
+      "target": "10",
+      "targetHandle": "10-Plastic",
+      "animated": true,
+      "data": {
+        "amount": 2.499999,
+        "name": "Plastic"
+      },
+      "selectable": true,
+      "selected": false,
+      "label": "0",
+      "type": "inputEdge"
+    },
+    {
+      "id": "10 -> 11",
+      "source": "10",
+      "sourceHandle": "10-Empty Canister",
+      "target": "11",
+      "targetHandle": "11-Empty Canister",
+      "animated": true,
+      "data": {
+        "amount": 5,
+        "name": "Empty Canister"
+      },
+      "selectable": true,
+      "selected": false,
+      "label": "0",
+      "type": "inputEdge"
+    },
+    {
+      "id": "2 -> 11",
+      "source": "2",
+      "sourceHandle": "2-Turbofuel",
+      "target": "11",
+      "targetHandle": "11-Turbofuel",
+      "animated": true,
+      "data": {
+        "amount": 5,
+        "name": "Turbofuel"
+      },
+      "selectable": true,
+      "selected": false,
+      "label": "0",
+      "type": "inputEdge"
+    }
+  ]
+}

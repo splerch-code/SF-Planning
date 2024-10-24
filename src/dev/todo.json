@@ -1,0 +1,61 @@
+{
+  "fixes": [
+    {
+      "item": "fix input inconsistency in machine editor",
+      "status": "not started"
+    },
+    {
+      "item": "machine -> machine edge not getting data",
+      "status": "not started"
+    },
+    {
+      "item": "console error: 'refused to load the script'",
+      "status": "not started"
+    }
+  ],
+  "improvements": [
+    { "item": "build todo list node", "status": "completed" },
+    {
+      "item": "implement rounding for reasources",
+      "status": "not started",
+      "children": [
+        { "item": "machine nodes", "status": "not started" },
+        { "item": "resource nodes", "status": "not started" }
+      ]
+    },
+    { "item": "save and load flows", "status": "in progress" },
+    {
+      "item": "shortcut buttons for resource allocation",
+      "status": "not started"
+    },
+    {
+      "item": "add container nodes",
+      "status": "not started"
+    },
+    { "item": "show power comsumption", "status": "not started" },
+    {
+      "item": "provide summary statistics",
+      "status": "not started",
+      "children": [
+        { "item": "surplus resources", "status": "not started" },
+        { "item": "power needed", "status": "not started" },
+        { "item": "missing ingredients", "status": "not started" }
+      ]
+    },
+    { "item": "add power plants", "status": "not started" }
+  ],
+  "finishes": [
+    {
+      "item": "refactor code",
+      "status": "not started"
+    },
+    {
+      "item": "remove unused imports",
+      "status": "not started"
+    },
+    {
+      "item": "remove todo list",
+      "status": "not started"
+    }
+  ]
+}

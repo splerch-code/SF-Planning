@@ -15,17 +15,22 @@ import InputEdge from "./Edges/InputEdge";
 import EditResource from "./Components/EditResource";
 import EditInput from "./Components/EditInput";
 import EditMachine from "./Components/EditMachine";
+import Todo from "./dev/Todo";
+import LoadTodo from "./dev/LoadTodo";
 
 import "@xyflow/react/dist/style.css";
 
 const nodeTypes = {
   resourceNode: ResourceNode,
   machineNode: MachineNode,
+  todoNode: Todo,
 };
 
 const edgeTypes = {
   inputEdge: InputEdge,
 };
+
+const showTodo = true;
 
 const initialNodes = [];
 
@@ -123,14 +128,18 @@ function App() {
     setEdges((es) => es.map((edge) => ({ ...edge, selected: false })));
     setSelectedNode(null);
     setSelectedEdge(null);
+    console.log({ nodes: nodes, edges: edges });
   };
 
   return (
     <div className="h-screen flex flex-col">
+      <LoadTodo setNodes={setNodes} nodes={nodes} />
       <Header
         addMachine={addMachine}
         addResource={addResource}
         sfData={sfData}
+        nodes={nodes}
+        edges={edges}
       />
       <EditResource
         selectedNode={selectedNode}
