@@ -2,11 +2,11 @@
   "fixes": [
     {
       "item": "fix input inconsistency in machine editor",
-      "status": "not started"
+      "status": "completed"
     },
     {
       "item": "machine -> machine edge not getting data",
-      "status": "not started"
+      "status": "completed"
     },
     {
       "item": "console error: 'refused to load the script'",
@@ -17,9 +17,9 @@
     { "item": "build todo list node", "status": "completed" },
     {
       "item": "implement rounding for reasources",
-      "status": "not started",
+      "status": "in progress",
       "children": [
-        { "item": "machine nodes", "status": "not started" },
+        { "item": "machine nodes", "status": "completed" },
         { "item": "resource nodes", "status": "not started" }
       ]
     },

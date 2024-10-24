@@ -9,7 +9,33 @@ const EditMachine = ({ selectedNode, clearAllSelections, setNodes }) => {
   }
 
   const [multiplier, setMultiplier] = useState(selectedNode.data.multiplier);
+  const [dummyMultiplier, setDummyMultiplier] = useState(multiplier);
   const perMinuteFactor = 60 / selectedNode.data.time;
+  const [ingredientAmounts, setIngredientAmounts] = useState(
+    selectedNode.data.ingredients.map(
+      (ing) => ing.amount * multiplier * perMinuteFactor
+    )
+  );
+  const [productAmounts, setProductAmounts] = useState(
+    selectedNode.data.products.map(
+      (prod) => prod.amount * multiplier * perMinuteFactor
+    )
+  );
+
+  const handleMultiplierUpdate = (updatedMultiplier) => {
+    setMultiplier(updatedMultiplier);
+    setIngredientAmounts(
+      selectedNode.data.ingredients.map(
+        (ing) => ing.amount * updatedMultiplier * perMinuteFactor
+      )
+    );
+    setProductAmounts(
+      selectedNode.data.products.map(
+        (prod) => prod.amount * updatedMultiplier * perMinuteFactor
+      )
+    );
+    setDummyMultiplier(updatedMultiplier);
+  };
 
   const handleUpdate = () => {
     let updatedNode = selectedNode;
@@ -55,7 +81,7 @@ const EditMachine = ({ selectedNode, clearAllSelections, setNodes }) => {
               <div className="p-2">
                 <h4 className="text-lg font-semibold">Inputs</h4>
                 {selectedNode.data.ingredients.map((ingredient, index) => (
-                  <div className="my-2">
+                  <div className="my-2" key={ingredient.item.id || index}>
                     <label htmlFor="" className="mb-2 flex items-center">
                       <img
                         src={`/sf-images/item-images/${ingredient.item.name}.png`}
@@ -67,16 +93,29 @@ const EditMachine = ({ selectedNode, clearAllSelections, setNodes }) => {
                     <input
                       type="number"
                       className="mt-1 w-20 p-2 border border-gray-300 bg-gray-800 rounded focus:ring-blue-500 focus:border focus:border-blue-500 mr-2"
-                      value={ingredient.amount * multiplier * perMinuteFactor}
-                      onChange={(e) =>
-                        setMultiplier(
-                          parseFloat(e.target.value) / perMinuteFactor
-                        )
-                      }
+                      value={ingredientAmounts[index]}
+                      onChange={(e) => {
+                        const newIngredients = ingredientAmounts.map(
+                          (ing, i) => {
+                            if (i === index)
+                              return parseFloat(e.target.value || "0");
+                            return ing;
+                          }
+                        );
+                        setIngredientAmounts(newIngredients);
+                      }}
+                      onBlur={(e) => {
+                        handleMultiplierUpdate(
+                          parseFloat(e.target.value || "0") /
+                            perMinuteFactor /
+                            ingredient.amount
+                        );
+                      }}
                     />
                   </div>
                 ))}
               </div>
+
               <div className="py-2 px-4 mx-2 border-x border-sf-ficsit">
                 <h4 className="text-lg font-semibold">Machines Needed</h4>
                 <div className="my-2">
@@ -91,16 +130,22 @@ const EditMachine = ({ selectedNode, clearAllSelections, setNodes }) => {
                   <input
                     type="number"
                     className="mt-1 w-20 p-2 border border-gray-300 bg-gray-800 rounded focus:ring-blue-500 focus:border focus:border-blue-500"
-                    value={multiplier}
-                    onChange={(e) => setMultiplier(parseFloat(e.target.value))}
+                    value={dummyMultiplier}
+                    onChange={(e) =>
+                      setDummyMultiplier(parseFloat(e.target.value || "0"))
+                    }
+                    onBlur={(e) =>
+                      handleMultiplierUpdate(parseFloat(e.target.value || "0"))
+                    }
                     autoFocus
                   />
                 </div>
               </div>
+
               <div className="p-2">
                 <h4 className="text-lg font-semibold">Outputs</h4>
                 {selectedNode.data.products.map((product, index) => (
-                  <div className="my-2">
+                  <div className="my-2" key={product.item.id || index}>
                     <label htmlFor="" className="mb-2 flex items-center">
                       <img
                         src={`/sf-images/item-images/${product.item.name}.png`}
@@ -112,12 +157,22 @@ const EditMachine = ({ selectedNode, clearAllSelections, setNodes }) => {
                     <input
                       type="number"
                       className="mt-1 w-20 p-2 border border-gray-300 bg-gray-800 rounded focus:ring-blue-500 focus:border focus:border-blue-500 mr-2"
-                      value={product.amount * multiplier * perMinuteFactor}
-                      onChange={(e) =>
-                        setMultiplier(
-                          parseFloat(e.target.value) / perMinuteFactor
-                        )
-                      }
+                      value={productAmounts[index]}
+                      onChange={(e) => {
+                        const newProducts = productAmounts.map((prod, i) => {
+                          if (i === index)
+                            return parseFloat(e.target.value || "0");
+                          return prod;
+                        });
+                        setProductAmounts(newProducts);
+                      }}
+                      onBlur={(e) => {
+                        handleMultiplierUpdate(
+                          parseFloat(e.target.value || "0") /
+                            perMinuteFactor /
+                            product.amount
+                        );
+                      }}
                     />
                   </div>
                 ))}

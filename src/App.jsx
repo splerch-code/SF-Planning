@@ -128,7 +128,6 @@ function App() {
     setEdges((es) => es.map((edge) => ({ ...edge, selected: false })));
     setSelectedNode(null);
     setSelectedEdge(null);
-    console.log({ nodes: nodes, edges: edges });
   };
 
   return (
@@ -140,6 +139,8 @@ function App() {
         sfData={sfData}
         nodes={nodes}
         edges={edges}
+        setEdges={setEdges}
+        setNodes={setNodes}
       />
       <EditResource
         selectedNode={selectedNode}

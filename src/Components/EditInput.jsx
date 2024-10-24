@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { FaArrowRight } from "react-icons/fa";
 
 const EditInput = ({
@@ -19,11 +19,15 @@ const EditInput = ({
   const getSourceOutput = () => {
     if (sourceNode.type === "resourceNode") {
       return sourceNode.data.amount;
-    } else if (sourceNode.type === "buildingNode") {
+    } else if (sourceNode.type === "machineNode") {
       let product = sourceNode.data.products.find(
         (p) => p.item.name === selectedEdge.data.name
       );
-      return (product * sourceNode.data.multiplier * sourceNode.data.time) / 60;
+      console.log(product);
+      return (
+        (product.amount * sourceNode.data.multiplier * 60) /
+        sourceNode.data.time
+      );
     }
   };
   const getTargetInput = () => {
@@ -71,7 +75,7 @@ const EditInput = ({
               src={`sf-images/building-images/${targetNode.data.machine}.png`}
               className="h-8 mx-2 flex-2"
             />
-            <span className="flex-none">{targetNode.data.name}</span>
+            <span className="flex-none pr-8">{targetNode.data.name}</span>
             <button
               className="ml-auto hover:text-black text-2xl"
               onClick={clearAllSelections}

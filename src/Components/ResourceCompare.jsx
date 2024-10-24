@@ -1,10 +1,11 @@
 import React from "react";
 
 const ResourceCompare = ({ nItems, nTarget, isOutput }) => {
+  const round = (num) => Math.round(num * 1000) / 1000;
   let colorClass = null;
-  if (nItems == nTarget) {
+  if (round(nItems) == round(nTarget)) {
     colorClass = "text-white";
-  } else if (nItems > nTarget) {
+  } else if (round(nItems) > round(nTarget)) {
     if (isOutput) {
       colorClass = "text-red-500";
     } else {
@@ -20,7 +21,7 @@ const ResourceCompare = ({ nItems, nTarget, isOutput }) => {
 
   return (
     <span className={colorClass}>
-      {nItems}/{nTarget}
+      {round(nItems)}/{round(nTarget)}
     </span>
   );
 };
