@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from "react";
+import React, { useCallback, useState, useRef } from "react";
 import {
   ReactFlow,
   Background,
@@ -6,15 +6,19 @@ import {
   useNodesState,
   useEdgesState,
   addEdge,
+  useReactFlow,
+  ReactFlowProvider,
 } from "@xyflow/react";
 import ResourceNode from "./Nodes/ResourceNode";
 import MachineNode from "./Nodes/MachineNode";
+import ContainerNode from "./Nodes/ContainerNode";
 import Header from "./Components/Header";
 import sfData from "./data/sf-data.json";
 import InputEdge from "./Edges/InputEdge";
 import EditResource from "./Components/EditResource";
 import EditInput from "./Components/EditInput";
 import EditMachine from "./Components/EditMachine";
+import EditContainer from "./Components/EditContainer";
 import Todo from "./dev/Todo";
 import LoadTodo from "./dev/LoadTodo";
 
@@ -24,13 +28,12 @@ const nodeTypes = {
   resourceNode: ResourceNode,
   machineNode: MachineNode,
   todoNode: Todo,
+  containerNode: ContainerNode,
 };
 
 const edgeTypes = {
   inputEdge: InputEdge,
 };
-
-const showTodo = true;
 
 const initialNodes = [];
 
@@ -41,12 +44,15 @@ function App() {
   const [edges, setEdges, onEdgesChange] = useEdgesState(initialEdges);
   const [selectedNode, setSelectedNode] = useState(null);
   const [selectedEdge, setSelectedEdge] = useState(null);
+  // const { setViewport, zoomIn, zoomOut } = useReactFlow();
 
   const onConnect = useCallback(
     (params) => {
       clearNodeEdgeSelection();
       if (
-        params.sourceHandle.split("-")[1] != params.targetHandle.split("-")[1]
+        params.sourceHandle.split("-")[1] !=
+          params.targetHandle.split("-")[1] &&
+        params.targetHandle.split("-")[1] != "Container"
       ) {
         alert("Cannot connect nodes of different resources");
         return;
@@ -107,6 +113,21 @@ function App() {
     setSelectedNode(newResourceNode);
   };
 
+  const addContainer = () => {
+    let nodeList = [{ id: "0" }, ...nodes];
+    const newResourceId = Math.max(...nodeList.map((n) => parseInt(n.id))) + 1;
+    clearNodeEdgeSelection();
+    const containerNode = {
+      id: `${newResourceId}`,
+      type: "containerNode",
+      position: { x: 100, y: 200 },
+      selectable: true,
+      data: { id: `${newResourceId}` },
+      name: "Container",
+    };
+    setNodes((ns) => [...ns, containerNode]);
+  };
+
   const onSelectNode = (e, node) => {
     setSelectedEdge(null);
     if (node.selectable) {
@@ -136,6 +157,7 @@ function App() {
       <Header
         addMachine={addMachine}
         addResource={addResource}
+        addContainer={addContainer}
         sfData={sfData}
         nodes={nodes}
         edges={edges}
@@ -162,30 +184,38 @@ function App() {
         clearAllSelections={clearNodeEdgeSelection}
         setNodes={setNodes}
       />
+      <EditContainer
+        selectedNode={selectedNode}
+        clearAllSelections={clearNodeEdgeSelection}
+        setNodes={setNodes}
+        setEdges={setEdges}
+        edges={edges}
+      />
       <div className="bg-sf-body w-screen h-screen flex-1 items-center justify-center text-white">
-        <ReactFlow
-          nodes={nodes}
-          edges={edges}
-          onNodesChange={onNodesChange}
-          onEdgesChange={onEdgesChange}
-          onNodeClick={onSelectNode}
-          onNodeDragStop={clearNodeEdgeSelection}
-          onPaneClick={onSelectPane}
-          onEdgeClick={(e, edge) => {
-            setSelectedEdge(edge);
-            console.log(edge);
-          }}
-          onConnect={onConnect}
-          nodeTypes={nodeTypes}
-          edgeTypes={edgeTypes}
-          colorMode="dark"
-          minZoom={0.1}
-          multiSelectionKeyCode={null}
-          deleteKeyCode={null}
-        >
-          <Background />
-          <MiniMap />
-        </ReactFlow>
+        <ReactFlowProvider>
+          <ReactFlow
+            nodes={nodes}
+            edges={edges}
+            onNodesChange={onNodesChange}
+            onEdgesChange={onEdgesChange}
+            onNodeClick={onSelectNode}
+            onNodeDragStop={clearNodeEdgeSelection}
+            onPaneClick={onSelectPane}
+            onEdgeClick={(e, edge) => {
+              setSelectedEdge(edge);
+            }}
+            onConnect={onConnect}
+            nodeTypes={nodeTypes}
+            edgeTypes={edgeTypes}
+            colorMode="dark"
+            minZoom={0.1}
+            multiSelectionKeyCode={null}
+            deleteKeyCode={null}
+          >
+            <Background />
+            <MiniMap />
+          </ReactFlow>
+        </ReactFlowProvider>
       </div>
     </div>
   );

@@ -19,7 +19,11 @@ const ResourceNode = ({ data }) => {
       <div className="font-bold text-center">
         {data.name}
         <div>
-          <ResourceCompare nItems={amountUsed} nTarget={data.amount} />
+          <ResourceCompare
+            nItems={amountUsed}
+            nTarget={data.amount}
+            isOutput={true}
+          />
         </div>
       </div>
       <Handle

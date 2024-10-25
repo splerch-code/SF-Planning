@@ -23,13 +23,15 @@ export default function InputEdge({
       onSelectEdge(null, { id, sourceX, sourceY, targetX, targetY, data });
     }
   };
+  const round = (n) => Math.round(n * 1000) / 1000;
 
   return (
     <>
       <BaseEdge
         id={id}
         path={edgePath}
-        style={{ strokeWidth: 12, stroke: "rgba(242, 200, 0, .75)" }}
+        style={{ strokeWidth: 12 }}
+        className="stroke-sf-ficsit"
       />
       <EdgeLabelRenderer>
         <button
@@ -41,7 +43,7 @@ export default function InputEdge({
           className="py-1 px-2 bg-sf-dark rounded-full text-white font-bold border-2 border-sf"
           onClick={handleSelectEdge}
         >
-          {data.amount}
+          {round(data.amount)}
         </button>
       </EdgeLabelRenderer>
     </>

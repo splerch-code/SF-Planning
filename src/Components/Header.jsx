@@ -3,10 +3,12 @@ import AddMachineForm from "./AddMachineForm";
 import AddResourceForm from "./AddResourceForm";
 import SaveFlow from "./SaveFlow";
 import UploadFlow from "./UploadFlow";
+import AddContainer from "./AddContainer";
 
 const Header = ({
   addMachine,
   addResource,
+  addContainer,
   sfData,
   nodes,
   edges,
@@ -19,6 +21,7 @@ const Header = ({
       <div className="flex-none">
         <AddResourceForm addResource={addResource} sfData={sfData} />
         <AddMachineForm addMachine={addMachine} sfData={sfData} />
+        <AddContainer addContainer={addContainer} />
       </div>
       <div className="flex-grow"></div>
       <SaveFlow nodes={nodes} edges={edges} />

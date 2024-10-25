@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { FaArrowRight } from "react-icons/fa";
+import { HiAdjustmentsVertical } from "react-icons/hi2";
 
 const EditInput = ({
   selectedEdge,
@@ -23,7 +24,6 @@ const EditInput = ({
       let product = sourceNode.data.products.find(
         (p) => p.item.name === selectedEdge.data.name
       );
-      console.log(product);
       return (
         (product.amount * sourceNode.data.multiplier * 60) /
         sourceNode.data.time
@@ -31,15 +31,36 @@ const EditInput = ({
     }
   };
   const getTargetInput = () => {
-    let ingredient = targetNode.data.ingredients.find(
-      (ing) => ing.item.name === selectedEdge.data.name
-    );
-    return (
-      (ingredient * targetNode.data.multiplier * targetNode.data.time) / 60
-    );
+    if (targetNode.type === "machineNode") {
+      let ingredient = targetNode.data.ingredients.find(
+        (ing) => ing.item.name === selectedEdge.data.name
+      );
+      return (
+        (ingredient.amount * targetNode.data.multiplier * 60) /
+        targetNode.data.time
+      );
+    }
+    return 0;
   };
+
   const sourceOutput = getSourceOutput();
   const targetInput = getTargetInput();
+
+  const sourceInUse = edges
+    .filter(
+      (edge) =>
+        selectedEdge.id != edge.id &&
+        selectedEdge.sourceHandle === edge.sourceHandle
+    )
+    .reduce((sum, edge) => sum + edge.data.amount, 0);
+
+  const targetProvided = edges
+    .filter(
+      (edge) =>
+        selectedEdge.id != edge.id &&
+        edge.targetHandle === selectedEdge.targetHandle
+    )
+    .reduce((sum, edge) => sum + edge.data.amount, 0);
 
   const [amount, setAmount] = useState(selectedEdge.data.amount || 0);
 
@@ -71,11 +92,12 @@ const EditInput = ({
               className="h-8 mr-2 flex-none"
             />
             <span className="flex-none">{selectedEdge.data.name}</span>
-            <img
-              src={`sf-images/building-images/${targetNode.data.machine}.png`}
-              className="h-8 mx-2 flex-2"
-            />
-            <span className="flex-none pr-8">{targetNode.data.name}</span>
+            <FaArrowRight className="mx-2" />
+            {targetNode.type === "machineNode" ? (
+              <span className="flex-none pr-8">{targetNode.data.name}</span>
+            ) : (
+              <span>Container</span>
+            )}
             <button
               className="ml-auto hover:text-black text-2xl"
               onClick={clearAllSelections}
@@ -84,6 +106,74 @@ const EditInput = ({
             </button>
           </h2>
           <div className="p-6">
+            <div className="mb-4 border-b pb-4 flex">
+              <div className="px-4 flex-1 border-r ">
+                <h2 className="text-lg font-bold">Source</h2>
+                <div className="mb-2 text-small text-gray-400">
+                  {sourceNode.data.name}
+                </div>
+                <div className="flex mb-1 pb-1 items-center border-b">
+                  <div className="">Produced</div>
+                  <div className="flex-grow px-2"></div>
+                  <button
+                    className="rounded px-1 border border-sf rounded-lg text-sf flex hover:bg-sf hover:text-black items-center"
+                    onClick={() => setAmount(sourceOutput)}
+                  >
+                    <HiAdjustmentsVertical className="w-4 h-4" />
+                    {sourceOutput}
+                  </button>
+                </div>
+                <div className="flex mb-1 pb-1 items-center border-b">
+                  <div className="">Distributed elsewhere</div>
+                  <div className="flex-grow px-2"></div>
+                  <span>{sourceInUse}</span>
+                </div>
+                <div className="flex mb-1 pb-1 items-center border-b">
+                  <div className="">Available</div>
+                  <div className="flex-grow px-2"></div>
+                  <button
+                    className="rounded px-1 border border-sf rounded-lg text-sf flex hover:bg-sf hover:text-black items-center"
+                    onClick={() => setAmount(sourceOutput - sourceInUse)}
+                  >
+                    <HiAdjustmentsVertical className="w-4 h-4" />
+                    {sourceOutput - sourceInUse}
+                  </button>
+                </div>
+              </div>
+              <div className="px-4 flex-1">
+                <h2 className="text-lg font-bold">Target</h2>
+                <div className="mb-2 text-small text-gray-400">
+                  {targetNode.data.name}
+                </div>
+                <div className="flex mb-1 pb-1 items-center border-b">
+                  <div className="">Requried</div>
+                  <div className="flex-grow px-2"></div>
+                  <button
+                    className="rounded px-1 border border-sf rounded-lg text-sf flex hover:bg-sf hover:text-black items-center"
+                    onClick={() => setAmount(targetInput)}
+                  >
+                    <HiAdjustmentsVertical className="w-4 h-4" />
+                    {targetInput}
+                  </button>
+                </div>
+                <div className="flex mb-1 pb-1 items-center border-b">
+                  <div className="">Sourced elsewhere</div>
+                  <div className="flex-grow px-2"></div>
+                  <span>{targetProvided}</span>
+                </div>
+                <div className="flex mb-1 pb-1 items-center border-b">
+                  <div className="">Defecit</div>
+                  <div className="flex-grow px-2"></div>
+                  <button
+                    className="rounded px-1 border border-sf rounded-lg text-sf flex hover:bg-sf hover:text-black items-center"
+                    onClick={() => setAmount(targetInput - targetProvided)}
+                  >
+                    <HiAdjustmentsVertical className="w-4 h-4" />
+                    {targetInput - targetProvided}
+                  </button>
+                </div>
+              </div>
+            </div>
             <div className="mb-6">
               <div className="flex items-center mb-4">
                 <div className="flex-grow"></div>
@@ -113,7 +203,7 @@ const EditInput = ({
               </div>
               <input
                 type="range"
-                className={`w-96 ${
+                className={`w-full ${
                   parseFloat(amount) > sourceOutput
                     ? "accent-red-500"
                     : "accent-sf"
@@ -125,7 +215,7 @@ const EditInput = ({
                 step={0.0001}
               />
             </div>
-            <div className="flex">
+            <div className="flex w-[500px]">
               <button
                 className="text-sf-ficsit-dark border font-bold border-sf-ficsit-dark w-full py-2 mx-2 rounded hover:bg-sf-ficsit-dark hover:text-black flex-1"
                 onClick={clearAllSelections}

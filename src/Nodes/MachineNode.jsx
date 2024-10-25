@@ -17,7 +17,7 @@ const MachineNode = ({ data }) => {
   };
 
   return (
-    <div className="shadow-md rounded-lg bg-sf-dark border-4 border-sf-ficsit active:border-red-500 building-node hover:bg-sf-body">
+    <div className="shadow-md rounded-lg bg-sf-dark border-4 border-sf-ficsit active:border-red-500 building-node hover:bg-sf-body cursor-pointer">
       <div className="flex">
         <div className="border-r border-sf">
           <div className="flex flex-col h-full">

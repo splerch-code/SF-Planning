@@ -8,6 +8,9 @@
 .selected .resource-node {
   border-color: #39e239 !important;
 }
+.selected .container-node {
+  border-color: #39e239 !important;
+}
 .selected .react-flow__edge-path {
   stroke: #39e239 !important;
   stroke-width: 15 !important;

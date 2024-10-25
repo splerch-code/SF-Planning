@@ -15,7 +15,7 @@ const LoadTodo = ({ setNodes, nodes }) => {
   return (
     <div className="fixed bottom-4 left-4 z-20">
       <button onClick={HandleLoadTodo}>
-        <FaQuestionCircle className="text-2xl text-blue-500 hover:text-blue-300 z-20" />
+        <FaQuestionCircle className="text-6xl text-blue-500 hover:text-blue-300 z-20" />
       </button>
     </div>
   );

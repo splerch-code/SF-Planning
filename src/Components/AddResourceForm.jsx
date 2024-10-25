@@ -17,7 +17,7 @@ const AddResourceForm = ({ addResource, sfData }) => {
         onClick={togglePopover}
         className="px-4 py-2 bg-black text-sf border border-sf rounded hover:bg-sf hover:text-black mx-2"
       >
-        Add Resource Node
+        New Resource
       </button>
       {isOpen && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-10 text-white">

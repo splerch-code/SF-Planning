@@ -8,12 +8,22 @@
       "item": "machine -> machine edge not getting data",
       "status": "completed"
     },
+    { "item": "fix multiple item types to container", "status": "completed" },
     {
       "item": "console error: 'refused to load the script'",
       "status": "not started"
     }
   ],
   "improvements": [
+    {
+      "item": "cosmetic updates",
+      "status": "not started",
+      "children": [
+        { "item": "favicon", "status": "not started" },
+        { "item": "banner logo", "status": "not started" },
+        { "item": "background", "status": "not started" }
+      ]
+    },
     { "item": "build todo list node", "status": "completed" },
     {
       "item": "implement rounding for resources",
@@ -32,7 +42,7 @@
     },
     {
       "item": "add container nodes",
-      "status": "in progress"
+      "status": "complete"
     },
     { "item": "show power consumption", "status": "not started" },
     {
@@ -44,12 +54,19 @@
         { "item": "missing ingredients", "status": "not started" }
       ]
     },
-    { "item": "add power plants", "status": "not started" }
+    { "item": "add power plants", "status": "not started" },
+    { "item": "add extractors/deposits", "status": "not started" },
+    { "item": "condense top banner items", "status": "not started" }
   ],
   "finishes": [
     {
       "item": "refactor code",
-      "status": "not started"
+      "status": "not started",
+      "children": [
+        { "item": "create image components", "status": "not started" },
+        { "item": "move flow out of `App` component", "status": "not started" },
+        { "item": "imporve auto pan and zoom", "status": "not started" }
+      ]
     },
     {
       "item": "remove unused imports",
