@@ -1,4 +1,5 @@
 import { Handle, useEdges, useNodes } from "@xyflow/react";
+import ResourceCompare from "../Components/ResourceCompare";
 
 const ResourceNode = ({ data }) => {
   const borderClass = data.hasSource ? "border-sf-ficsit-dark" : "border-sf";
@@ -17,26 +18,10 @@ const ResourceNode = ({ data }) => {
       <img src={imagePath} className="h-8 mx-auto" />
       <div className="font-bold text-center">
         {data.name}
-        <div
-          className={
-            amountUsed > data.amount
-              ? "text-red-500"
-              : amountUsed < data.amount
-              ? "text-green-500"
-              : "text-white"
-          }
-        >
-          {amountUsed}/<span className="font-bold">{data.amount}</span>
+        <div>
+          <ResourceCompare nItems={amountUsed} nTarget={data.amount} />
         </div>
       </div>
-      {data.hasSource && (
-        <Handle
-          type="target"
-          position="left"
-          className="bg-sf border-sf-dark h-4 w-4"
-          id={`${data.id}-${data.name}`}
-        />
-      )}
       <Handle
         type="source"
         position="right"

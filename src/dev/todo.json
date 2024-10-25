@@ -16,23 +16,25 @@
   "improvements": [
     { "item": "build todo list node", "status": "completed" },
     {
-      "item": "implement rounding for reasources",
+      "item": "implement rounding for resources",
       "status": "in progress",
       "children": [
         { "item": "machine nodes", "status": "completed" },
-        { "item": "resource nodes", "status": "not started" }
+        { "item": "resource nodes", "status": "completed" },
+        { "item": "edges", "status": "not started" }
       ]
     },
-    { "item": "save and load flows", "status": "in progress" },
+    { "item": "save and load flows", "status": "completed" },
+    { "item": "save and load flows validation", "status": "not started" },
     {
       "item": "shortcut buttons for resource allocation",
       "status": "not started"
     },
     {
       "item": "add container nodes",
-      "status": "not started"
+      "status": "in progress"
     },
-    { "item": "show power comsumption", "status": "not started" },
+    { "item": "show power consumption", "status": "not started" },
     {
       "item": "provide summary statistics",
       "status": "not started",
