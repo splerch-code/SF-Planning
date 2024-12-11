@@ -16,6 +16,8 @@ const MachineNode = ({ data }) => {
       .reduce((sum, edge) => sum + edge.data.amount, 0);
   };
 
+  const round = (number) => Math.round(number * 1000) / 1000;
+
   return (
     <div className="shadow-md rounded-lg bg-sf-dark border-4 border-sf-ficsit active:border-red-500 building-node hover:bg-sf-body cursor-pointer">
       <div className="flex">
@@ -51,7 +53,7 @@ const MachineNode = ({ data }) => {
               alt=""
               className="h-10 mr-2"
             />
-            {data.machine} &times; {data.multiplier}
+            {data.machine} &times; {round(data.multiplier)}
           </div>
         </div>
         <div className="border-l border-sf">
